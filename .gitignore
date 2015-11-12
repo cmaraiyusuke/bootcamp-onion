@@ -11,6 +11,8 @@
 # Generated files
 bin/
 gen/
+.DS_Store
+.idea/
 
 # Gradle files
 .gradle/
