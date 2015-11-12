@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import bolts.Task;
+import javax.inject.Inject;
+
 import jp.classmethod.onion.domain.onion.Onion;
-import jp.classmethod.onion.infrastructure.onion.GetOnionListHTTPClient;
 
 /**
  * たまねぎ一覧読み込みサービス
@@ -16,14 +17,16 @@ public class ReadOnionListService {
      * たまねぎ一覧取得HTTPクライアント
      *
      * ここはサービスレイヤー(アプリケーションレイヤ)
-     * 参照先はインフラストラクチャレイヤのHTTPクライアント
+     * 参照先もサービスレイヤ
      *
-     * service ----> infrastructure
-     * オォン！
-     *
-     * 使うのはHTTPのクライアントってこと、知ってる必要ない……なくない？
+     * service ----> service
      */
-    GetOnionListHTTPClient mClient = new GetOnionListHTTPClient();
+    private final OnionListStore mStore;
+
+    @Inject
+    public ReadOnionListService(OnionListStore store) {
+        this.mStore = store;
+    }
 
     /**
      * たまねぎの一覧を読み込む

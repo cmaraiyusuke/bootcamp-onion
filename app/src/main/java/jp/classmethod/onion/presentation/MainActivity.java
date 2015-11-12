@@ -1,5 +1,6 @@
 package jp.classmethod.onion.presentation;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,14 +13,19 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import bolts.Continuation;
 import bolts.Task;
 import bolts.TaskCompletionSource;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.ObjectGraph;
+import jp.classmethod.onion.App;
 import jp.classmethod.onion.R;
 import jp.classmethod.onion.domain.onion.Onion;
+import jp.classmethod.onion.module.ActivityModule;
 import jp.classmethod.onion.service.onion.ReadOnionListService;
 
 /**
@@ -35,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * presentation ----> service
      */
-    ReadOnionListService mReadOnionListService = new ReadOnionListService();
+    @Inject ReadOnionListService mReadOnionListService;
 
     @Bind(R.id.toolbar) Toolbar mToolbar = null;
 
@@ -44,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ObjectGraph objectGraph = ((App) getApplication()).getObjectGraph().plus(new ActivityModule());
+        objectGraph.inject(this);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);

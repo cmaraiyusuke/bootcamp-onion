@@ -14,11 +14,12 @@ import java.util.List;
 import jp.classmethod.onion.core.error.HTTPClientError;
 import jp.classmethod.onion.domain.onion.Onion;
 import jp.classmethod.onion.domain.onion.TasteType;
+import jp.classmethod.onion.service.onion.OnionListStore;
 
 /**
  * たまねぎ一覧を取得するHTTPクライアント
  */
-public class GetOnionListHTTPClient {
+public class GetOnionListHTTPClient implements OnionListStore {
 
     /**
      * OkHttpのクライアント
@@ -36,7 +37,7 @@ public class GetOnionListHTTPClient {
      *
      * @return たまねぎ一覧取得
      */
-    public List<Onion> get() {
+    @Override public List<Onion> get() {
         Request req = new Request.Builder().url(END_POINT).build();
 
         try {

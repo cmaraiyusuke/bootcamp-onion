@@ -5,11 +5,12 @@ import java.util.List;
 
 import jp.classmethod.onion.domain.onion.Onion;
 import jp.classmethod.onion.domain.onion.TasteType;
+import jp.classmethod.onion.service.onion.OnionListStore;
 
 /**
  * たまねぎ一覧を取得するインメモリストアクライアント
  */
-public class GetOnionListMemoryStoreClient {
+public class GetOnionListMemoryStoreClient implements OnionListStore {
 
     /**
      * インメモリストア
