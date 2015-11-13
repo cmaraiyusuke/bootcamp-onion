@@ -37,7 +37,7 @@ public class ReadOnionListService {
         return Task.callInBackground(new Callable<List<Onion>>() {
             @Override
             public List<Onion> call() throws Exception {
-                return mClient.get();
+                return mStore.get();
             }
         });
     }
