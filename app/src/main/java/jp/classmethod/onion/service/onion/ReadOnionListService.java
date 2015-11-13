@@ -1,7 +1,9 @@
 package jp.classmethod.onion.service.onion;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
+import bolts.Task;
 import jp.classmethod.onion.domain.onion.Onion;
 import jp.classmethod.onion.infrastructure.onion.GetOnionListHTTPClient;
 
@@ -26,10 +28,15 @@ public class ReadOnionListService {
     /**
      * たまねぎの一覧を読み込む
      *
-     * @return たまねぎ一覧
+     * @return たまねぎ一覧のタスク
      */
-    public List<Onion> read() {
-        return mClient.get();
+    public Task<List<Onion>> read() {
+        return Task.callInBackground(new Callable<List<Onion>>() {
+            @Override
+            public List<Onion> call() throws Exception {
+                return mClient.get();
+            }
+        });
     }
 
 }

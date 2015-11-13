@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
      * たまねぎ一覧のListViewを更新する
      */
     private void refreshListView() {
-        getOnionList().onSuccess(
+        mReadOnionListService.read().onSuccess(
             new Continuation<List<Onion>, Void>() {
                 @Override
                 public Void then(Task<List<Onion>> task) throws Exception {
@@ -67,26 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }, Task.UI_THREAD_EXECUTOR
         );
-    }
-
-    /**
-     * たまねぎ一覧を取得する
-     *
-     * @return たまねぎ一覧取得のTask
-     */
-    private Task<List<Onion>> getOnionList() {
-        final TaskCompletionSource<List<Onion>> taskSource = new TaskCompletionSource<>();
-
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                List<Onion> onions = mReadOnionListService.read();
-                taskSource.setResult(onions);
-            }
-        };
-        new Thread(runnable).start();
-
-        return taskSource.getTask();
     }
 
     @OnClick(R.id.fab)
